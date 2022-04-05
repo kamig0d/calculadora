@@ -1,0 +1,11 @@
+<div class="calc-container">
+    <div class="calc-screen">
+        <div>{{ currentValue }}</div>
+    </div>
+
+    <div class="calc-buttons-container">
+        <div *ngFor="let button of calcButtons">
+            <button class="calc-btn" [ngClass]="{'calc-ac-btn': button.name === 'action'}" (click)="calcClick(button)">{{ button.value }}</button>
+        </div>
+    </div>
+</div>
