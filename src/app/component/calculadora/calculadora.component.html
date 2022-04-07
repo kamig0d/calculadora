@@ -1,11 +1,17 @@
-<div class="calc-container">
-    <div class="calc-screen">
-        <div>{{ currentValue }}</div>
-    </div>
-
-    <div class="calc-buttons-container">
-        <div *ngFor="let button of calcButtons">
-            <button class="calc-btn" [ngClass]="{'calc-ac-btn': button.name === 'action'}" (click)="calcClick(button)">{{ button.value }}</button>
+<div [ngClass]="{'container-yellow-theme': yellowTheme == true, 'container-blue-theme': blueTheme == true}">
+    <div class="calc-container" [ngClass]="{'yellow-theme': yellowTheme == true, 'blue-theme': blueTheme == true}">
+        <div class="btn-theme-container">
+            <button class="btn-blue-theme" (click)="ChangeToBlueTheme()"></button>
+            <button class="btn-yellow-theme" (click)="ChangeToYellowTheme()"></button>
+        </div>
+        <div class="calc-screen">
+            <div>{{ currentValue }}</div>
+        </div>
+    
+        <div class="calc-buttons-container">
+            <div *ngFor="let button of calcButtons">
+                <button class="calc-btn" [ngClass]="{'calc-ac-btn': button.name === 'action'}" (click)="calcClick(button)">{{ button.value }}</button>
+            </div>
         </div>
     </div>
 </div>

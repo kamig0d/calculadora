@@ -24,7 +24,7 @@ export class CalculadoraComponent implements OnInit {
     { name: 'num', value: '2' },
     { name: 'num', value: '3' },
     { name: 'action', value: '+' },
-    { name: 'action', value: '(  )' },
+    { name: 'action', value: 'C' },
     { name: 'num', value: '0' },
     { name: 'action', value: '.' },
     { name: 'action', value: '=' },
@@ -33,8 +33,10 @@ export class CalculadoraComponent implements OnInit {
   public calcValues: Array<any> = [];
   public calcScreenControl = false;
   public currentPercent = 0;
+  public blueTheme = true;
+  public yellowTheme = false;
 
-  currentValue = 0;
+  currentValue: any = 0;
   operationValue = '';
 
   constructor() { }
@@ -50,7 +52,7 @@ export class CalculadoraComponent implements OnInit {
         this.currentValue = parseInt(btnClicked.value);
         this.calcScreenControl = false;
       } else {
-        this.currentValue = parseInt(`${this.currentValue}${btnClicked.value}`);
+        this.currentValue = parseFloat(`${this.currentValue}${btnClicked.value}`);
       }
     }
   }
@@ -63,7 +65,9 @@ export class CalculadoraComponent implements OnInit {
         this.calcScreenControl = false;
         break
       case '=':
-        this.calcValues.push(this.currentValue);
+        if(this.calcValues.length == 2) {
+          this.calcValues.push(this.currentValue);
+        }
         if(this.calcValues.length == 3)
           this.calculate(true);
         break;
@@ -79,6 +83,13 @@ export class CalculadoraComponent implements OnInit {
           this.calculate();
         }
       break;
+      case 'C':
+        this.currentValue = this.deleteLastNumber();
+        break;
+      case '.':
+        console.log('aqui', btnClicked.value);
+        this.currentValue = `${this.currentValue}${btnClicked.value}`;
+        break;
       default:
         this.calcValues.push(this.currentValue);
 
@@ -97,6 +108,23 @@ export class CalculadoraComponent implements OnInit {
     this.calcValues = [];
     if(!isEqual)
       this.calcValues.push(this.currentValue);
+  }
+
+  public deleteLastNumber() {
+    if(this.currentValue != 0)
+      return parseFloat((this.currentValue).toString().substring(0, (this.currentValue).toString().length - 1));
+    else
+      return 0
+  }
+
+  public ChangeToBlueTheme() {
+    this.blueTheme = true;
+    this.yellowTheme = false;
+  }
+
+  public ChangeToYellowTheme() {
+    this.blueTheme = false;
+    this.yellowTheme = true;
   }
 
 }
